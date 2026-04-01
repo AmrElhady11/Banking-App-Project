@@ -1,11 +1,15 @@
 package com.accounts.repository;
 
 import com.accounts.entity.Accounts;
+import com.accounts.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface AccountsRepository extends JpaRepository<Accounts,Long> {
-    Optional<Accounts> findByPublicAccountNumber(UUID publicAccountNumber);
+    Optional<Accounts> findByAccountNumber(UUID accountNumber);
 }
