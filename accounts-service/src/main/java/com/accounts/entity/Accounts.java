@@ -17,14 +17,11 @@ public class Accounts extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_number")
-    private Long accountNumber;
+    private UUID accountNumber;
 
-    @Column(name = "public_account_number")
-    private UUID publicAccountNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    @Column(name = "customer_id", nullable = false)
+    private UUID customerId;
 
     @Column(name = "account_type")
     private String accountType;
@@ -34,8 +31,8 @@ public class Accounts extends BaseEntity {
 
     @PrePersist
     public void prePersist() {
-            if(this.publicAccountNumber == null) {
-                this.publicAccountNumber = Generators.timeBasedEpochGenerator().generate();
+            if(this.accountNumber == null) {
+                this.accountNumber = Generators.timeBasedEpochGenerator().generate();
             }
 
          }
