@@ -16,7 +16,7 @@ import java.util.UUID;
 @Builder
 public class AccountRequest {
     @NotEmpty(message = "Account number cannot be null or empty")
-    private UUID publicAccountNumber;
+    private UUID accountNumber;
     @NotEmpty(message = "AccountType cannot be null or empty")
     private String accountType;
     @NotEmpty(message = "BranchAddress cannot be null or empty")
