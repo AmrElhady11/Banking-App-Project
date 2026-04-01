@@ -8,8 +8,6 @@ import com.accounts.repository.CustomerRepository;
 import com.accounts.request.AccountRequest;
 import com.accounts.service.IAccountService;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +26,7 @@ public class AccountServiceImpl implements IAccountService {
         Accounts theAccount = Accounts.builder()
                 .accountType(accountRequest.getAccountType())
                 .branchAddress(accountRequest.getBranchAddress())
-                .customer(theCustomer)
+                .customerId(theCustomer.getCustomerId())
                 .build();
         accountsRepository.save(theAccount);
     }
@@ -49,22 +47,27 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     @Transactional
     public boolean updateAccount(AccountRequest accountRequest) throws AccountNotFoundException {
-        Accounts theAccount = getAccountByAccountNumber(accountRequest.getPublicAccountNumber());
+        Accounts theAccount = getAccountByAccountNumber(accountRequest.getAccountNumber());
         Customer theCustomer = getCustomerByEmail(accountRequest.getCustomer().getEmail());
         if(theAccount==null)
             return false;
         theAccount = Accounts.builder()
                 .accountType(accountRequest.getAccountType())
                 .branchAddress(accountRequest.getBranchAddress())
-                .customer(theCustomer)
+                .customerId(theCustomer.getCustomerId())
                 .build();
         accountsRepository.save(theAccount);
         return true;
     }
 
     @Override
-    public boolean deleteAccount(String mobileNumber) {
-        return false;
+    @Transactional
+    public boolean deleteAccount(UUID accountNumber) throws AccountNotFoundException {
+        Accounts theAccount = getAccountByAccountNumber(accountNumber);
+        if(theAccount==null)
+            return false;
+        accountsRepository.delete(theAccount);
+        return true;
     }
 
 
@@ -75,7 +78,7 @@ public class AccountServiceImpl implements IAccountService {
         return customerRepository.findByMobileNumber(mobileNumber).orElseThrow(()-> new AccountNotFoundException(mobileNumber));
     }
     private Accounts getAccountByAccountNumber(UUID accountNumber) throws AccountNotFoundException {
-        return accountsRepository.findByPublicAccountNumber(accountNumber).orElseThrow(AccountNotFoundException::new);
+        return accountsRepository.findByAccountNumber(accountNumber).orElseThrow(AccountNotFoundException::new);
 
     }
 }
