@@ -19,10 +19,9 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "customer_id")
-    private Long customerId;
+    private UUID customerId;
 
-    @Column(name = "public_account_number")
-    private UUID publicCustomerId;
+
 
     private String name;
     private String email;
@@ -30,8 +29,9 @@ public class Customer {
     private String mobileNumber;
     @PrePersist
     public void prePersist() {
+    if(this.customerId == null) {
+        this.customerId = Generators.timeBasedEpochGenerator().generate();
 
-        this.publicCustomerId = Generators.timeBasedEpochGenerator().generate();
-
+    }
     }
 }
