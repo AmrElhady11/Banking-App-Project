@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: cards-service
+  datasource:
+    url: ${CarSrvDB_url}
+    username: ${CarSrvDB_username}
+    password: ${CarSrvDB_password}
+    driver-class-name: org.postgresql.Driver
+    jpa:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          ddl-auto: update
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: "env"
