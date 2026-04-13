@@ -1,10 +1,7 @@
 package com.accounts.entity;
 
-import com.fasterxml.uuid.Generators;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,11 +14,11 @@ public class Accounts extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_number")
-    private UUID accountNumber;
+    private Integer accountNumber;
 
 
     @Column(name = "customer_id", nullable = false)
-    private UUID customerId;
+    private Integer customerId;
 
     @Column(name = "account_type")
     private String accountType;
@@ -29,13 +26,13 @@ public class Accounts extends BaseEntity {
     private String branchAddress;
 
 
-    @PrePersist
-    public void prePersist() {
-            if(this.accountNumber == null) {
-                this.accountNumber = Generators.timeBasedEpochGenerator().generate();
-            }
+//    @PrePersist
+//    public void prePersist() {
+//            if(this.accountNumber == null) {
+//                this.accountNumber = Generators.timeBasedEpochGenerator().generate();
+//            }
 
          }
 
 
-}
+

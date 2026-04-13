@@ -55,7 +55,7 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     @Transactional
-    public boolean deleteAccount(UUID accountNumber) throws ResourceNotFoundException {
+    public boolean deleteAccount(Integer accountNumber) throws ResourceNotFoundException {
         Accounts theAccount = getAccountByAccountNumber(accountNumber);
         if(theAccount==null)
             return false;
@@ -70,7 +70,7 @@ public class AccountServiceImpl implements IAccountService {
     private Customer getCustomerByMobileNumber(String mobileNumber) throws ResourceNotFoundException {
         return customerRepository.findByMobileNumber(mobileNumber).orElseThrow(()-> new ResourceNotFoundException("Customer","mobileNumber",mobileNumber));
     }
-    private Accounts getAccountByAccountNumber(UUID accountNumber) throws ResourceNotFoundException{
+    private Accounts getAccountByAccountNumber(Integer accountNumber) throws ResourceNotFoundException{
         return accountsRepository.findByAccountNumber(accountNumber).orElseThrow(()-> new ResourceNotFoundException("Account","accountNumber",accountNumber.toString()));
 
     }

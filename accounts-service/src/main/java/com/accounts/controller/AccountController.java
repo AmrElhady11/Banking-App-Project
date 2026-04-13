@@ -44,7 +44,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<AccountResponse> deleteAccount(@RequestParam("accountNumber") UUID accountNumber) {
+    public ResponseEntity<AccountResponse> deleteAccount(@RequestParam("accountNumber") Integer accountNumber) {
         accountService.deleteAccount(accountNumber);
         AccountResponse accountResponse = AccountResponse.builder()
                 .statusMessage(String.format("Account deleted successfully with account number: %s", accountNumber))
