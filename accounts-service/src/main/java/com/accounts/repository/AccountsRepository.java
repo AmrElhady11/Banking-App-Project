@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface AccountsRepository extends JpaRepository<Accounts,Long> {
-    Optional<Accounts> findByAccountNumber(UUID accountNumber);
+public interface AccountsRepository extends JpaRepository<Accounts,Integer> {
+
+    Optional<Accounts> findByAccountNumber(Integer accountNumber);
 }
